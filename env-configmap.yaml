@@ -6,6 +6,7 @@ data:
   AWS_PROFILE: default
   AWS_BUCKET: arn:aws:s3:::test-858773246768-dev
   URL: "http://localhost:8100"
+  JWT_SECRET: "testing"
 kind: ConfigMap 
 metadata:
   name: myconfigmap
