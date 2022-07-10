@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: udagram-reverseproxy
-        image: cliffordusidamen/reverseproxy:v8
+        image: cliffordusidamen/reverseproxy:v1
         ports:
         - containerPort: 8080
         resources:
