@@ -74,6 +74,8 @@ router.post('/',
         url: fileName,
       });
 
+      console.log('Before save');
+
       const savedItem = await item.save();
 
       savedItem.url = AWS.getGetSignedUrl(savedItem.url);

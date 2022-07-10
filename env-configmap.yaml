@@ -1,0 +1,11 @@
+apiVersion: v1 
+data:
+  POSTGRES_DB: postgres
+  POSTGRES_HOST: database-1.c0cag6m6aatk.us-east-1.rds.amazonaws.com
+  AWS_REGION: us-east-1
+  AWS_PROFILE: default
+  AWS_BUCKET: arn:aws:s3:::test-858773246768-dev
+  URL: "http://localhost:8100"
+kind: ConfigMap 
+metadata:
+  name: myconfigmap
