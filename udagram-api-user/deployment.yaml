@@ -1,83 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: udagram-api-user
-  labels:
-    app: udagram-api-user
+  name: backend-user
 spec:
-  replicas: 2
   selector:
     matchLabels:
-      app: udagram-api-user
+      run: backend-user
+  replicas: 2
   template:
     metadata:
       labels:
-        app: udagram-api-user
+        run: backend-user
     spec:
       containers:
-      - name: udagram-api-user
-        image: cliffordusidamen/udagram-api-user:v1
+      - name: backend-user
+        image: docker.io/cliffordusidamen/udagram-api-user:v4
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         resources:
           limits:
             cpu: 500m
           requests:
-            cpu: 250m
-        env:
-        - name: POSTGRES_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: mysecret
-              key: POSTGRES_USERNAME
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysecret
-              key: POSTGRES_PASSWORD
-        - name: DOCKER_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: mysecret
-              key: DOCKER_USERNAME
-        - name: DOCKER_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysecret
-              key: DOCKER_PASSWORD
-        - name: POSTGRES_DB
-          valueFrom:
-            configMapKeyRef:
-              name: myconfigmap
-              key: POSTGRES_DB
-        - name: POSTGRES_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: myconfigmap
-              key: POSTGRES_HOST
-        - name: AWS_REGION
-          valueFrom:
-            configMapKeyRef:
-              name: myconfigmap
-              key: AWS_REGION
-        - name: AWS_PROFILE
-          valueFrom:
-            configMapKeyRef:
-              name: myconfigmap
-              key: AWS_PROFILE
-        - name: AWS_BUCKET
-          valueFrom:
-            configMapKeyRef:
-              name: myconfigmap
-              key: AWS_BUCKET
-        - name: URL
-          valueFrom:
-            configMapKeyRef:
-              name: myconfigmap
-              key: URL
-        - name: JWT_SECRET
-          valueFrom:
-            configMapKeyRef:
-              name: myconfigmap
-              key: JWT_SECRET
-      restartPolicy: Always
+            cpu: 200m
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: backend-user
+  name: backend-user
+spec:
+  ports:
+  - name: "8080"
+    port: 8080
+    targetPort: 8080
+  selector:
+    service: backend-user
