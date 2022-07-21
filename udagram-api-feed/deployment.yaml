@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend-feed
-        image: docker.io/cliffordusidamen/udagram-api-feed:v3
+        image: cliffordusidamen/udagram-api-feed:v9
         ports:
         - containerPort: 8080
         resources:
@@ -35,6 +35,16 @@ spec:
             secretKeyRef:
               name: env-secret
               key: POSTGRES_PASSWORD
+        - name: DOCKER_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: DOCKER_USERNAME
+        - name: DOCKER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: DOCKER_PASSWORD
         - name: POSTGRES_DB
           valueFrom:
             configMapKeyRef:
@@ -71,18 +81,23 @@ spec:
               name: env-config
               key: JWT_SECRET
       restartPolicy: Always
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    service: backend-feed
+    app: backend-feed
   name: backend-feed
+  namespace: default
+  selfLink: /api/v1/namespaces/default/services/backend-feed
 spec:
   ports:
-  - name: "8080"
-    port: 8080
+  - port: 8080
+    protocol: TCP
     targetPort: 8080
   selector:
-    service: backend-feed
+    app: backend-feed
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
