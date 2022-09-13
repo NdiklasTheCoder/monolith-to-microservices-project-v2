@@ -3,10 +3,11 @@ kind: ConfigMap
 metadata:
   name: env-config
 data:
+  POSTGRES_USERNAME: postgres
+  POSTGRES_PASSWORD: H2XggZC68tzvDyc
+  POSTGRES_HOST: database-1.cw6rpjpxjpep.us-east-1.rds.amazonaws.com
   POSTGRES_DB: postgres
-  POSTGRES_HOST: udagram-db-981561189593.csu0o9ey3smn.us-east-1.rds.amazonaws.com
+  AWS_BUCKET: mono-226980126821
   AWS_REGION: us-east-1
-  AWS_PROFILE: default
-  AWS_BUCKET: udagram-bucket-981561189593
   JWT_SECRET: testing
-  URL: "http://localhost:8100"
+  URL: http://localhost:8100
